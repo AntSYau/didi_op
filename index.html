@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="pic/0.jpg" data-state="dimbg_dark">
+					<h2>Taxi Demand Prediction</h2>
+					<p>
+						<b>Group Members (in Alphabetical Order):</b> <br>
+						Tianjian Lei,
+						Shi Qiu,
+						Haoming Zhang
+					</p>
+				</section>
+				<section data-markdown data-background-image="pic/1.png" data-state="dimbg_dark">
+					### Predicting Taxi Demand Enables
+					- Pre-allocate resources
+					- Avoid unnecessary energy consumption
+					- Reduce empty taxis
+				</section>
+				<section data-background-image="pic/1.png" data-state="dimbg_dark">
+					<h2>Current Methods</h2>
+					<ul>
+					<li>Time Series Analysis
+						<ul><li>Cannot capture the complex nonlinear spatial-temporal correlations</li></ul>
+					<li class="fragment">Deep Learning on Spatial Relation</li>
+					<li class="fragment">
+						Deep Learning on Temporal Relation
+						<ul><li>None of them consider spatial relation and temporal sequential relation simultaneously</li></ul>
+					</li>
+					</li>
+				</ul>
+					</section>
+				<section data-background-video="pic/0.mp4" data-background-video-loop ="loop" data-state="dimbg_dark">
+					<div class="fragment fade-out"><div style="vertical-align: 95%" ><h2 style="color: black">Our Data</h2></div>
+					<div style="font-size: 40px; color:black;"><ul>
+						<li>Nov 2016, The city of Chengdu</li>
+						<li>Didi Taxi Order Data</li>
+						<li>Order ID, Pick up / drop off timestmp and GPS coordinate</li>
+					</ul></div>
+				</section>
+				<section data-background-image="pic/1.png" data-state="dimbg_dark">
+					<section>
+						<h2> Methodology</h2>
+						<img src="pic/2.png">
+						<div style="font-size: 26px">The Architecture(Yao et al. 2018).</div>
+					</section>
+					<section data-markdown>
+						## Local CNN
+						- First Law of Geography (Tobler, 1970) - “near things are more related than distant things”.
+						- Generate $S\times S$ image $\mathrm{Y}_t^i\in \mathbb{R}^{S\times S\times1}$ for each location $i$ at each time $t$.
+						- $\mathrm{Y}_t^{i,k}=f(\mathrm{Y}_t^{i-1}*\mathrm{W}_t^k+\textrm{b}_t^k)$
+					</section>
+					<section>
+						<h2>LSTM</h2>
+						Provides a good way to model sequential dependencies.<br />
+						<img src="pic/3.png" height="50%" width="50%" style="background:none; border:none; box-shadow:none;">
+					</section>
+					<section data-markdown>
+						## Structural Embedding
+						Similar regions may not be close in space.
+						$$ \omega_{ij}=exp(-\alpha\text{DTW}(i,j)) $$
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/math/math.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				],
+				transitionSpeed: 'fast',
+				    // 在右下角显示控制面板
+					controls: false,
+					progress: false,
+					slideNumber: true,
+			});
+		</script>
+	</body>
+	<style>
+		.container{
+			display: flex;
+		}
+		.col{
+			flex: 1;
+		}
+	</style>
+</html>
